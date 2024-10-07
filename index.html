@@ -5,16 +5,56 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ACLED Heatmap</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-    <link rel="stylesheet" href="style.css"/>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css" />
     <style>
-        #map { height: 600px; }
+        body { margin: 0; padding: 0; }
+        #map { width: 100vw; height: 100vh; }
+        #filters { 
+            position: absolute; 
+            top: 10px; 
+            left: 10px; 
+            z-index: 1000; 
+            background: white; 
+            padding: 10px; 
+            border-radius: 5px;
+        }
+        #legend { 
+            position: absolute; 
+            bottom: 10px; 
+            right: 10px; 
+            z-index: 1000; 
+            background: white; 
+            padding: 10px; 
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body>
+    <div id="filters">
+        <h2>ACLED Event Filters</h2>
+        <form>
+            <select id="stateFilter">
+                <option value="">All States</option>
+            </select>
+            <select id="cityFilter">
+                <option value="">All Cities</option>
+            </select>
+            <select id="yearFilter">
+                <option value="">All Years</option>
+            </select>
+            <select id="eventTypeFilter">
+                <option value="">All Event Types</option>
+            </select>
+            <button type="button" id="clearFilters">Clear Filters</button>
+        </form>
+    </div>
     <div id="map"></div>
+    <div id="legend"></div>
+
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
+    <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <script src="acled_heatmap.js"></script>
 </body>
