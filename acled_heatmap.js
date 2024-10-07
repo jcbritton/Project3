@@ -145,8 +145,6 @@ document.addEventListener('DOMContentLoaded', function() {
           });
           map.addLayer(markerClusterGroup);
       }
-
-      updateLegend(baseIntensity);
   }
 
   function updateHeatmap() {
@@ -165,33 +163,6 @@ document.addEventListener('DOMContentLoaded', function() {
       });
 
       updateVisualization(filteredData);
-  }
-
-  function updateLegend(maxIntensity) {
-      const legend = document.getElementById('legend');
-      legend.innerHTML = '';
-
-      const gradientColors = ['blue', 'lime', 'red'];
-      const steps = gradientColors.length;
-
-      for (let i = 0; i < steps; i++) {
-          const intensity = (i / (steps - 1)) * maxIntensity;
-          const div = document.createElement('div');
-          div.style.backgroundColor = gradientColors[i];
-          div.style.width = '20px';
-          div.style.height = '20px';
-          div.style.display = 'inline-block';
-          div.title = `Intensity: ${intensity.toFixed(2)}`;
-          legend.appendChild(div);
-      }
-
-      const labels = ['Low', 'Medium', 'High'];
-      labels.forEach((label, i) => {
-          const span = document.createElement('span');
-          span.textContent = label;
-          span.style.marginRight = '10px';
-          legend.appendChild(span);
-      });
   }
 
   function clearFilters() {
