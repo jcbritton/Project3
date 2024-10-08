@@ -25,5 +25,3 @@ CREATE TABLE "acled" (
 	"source_scale" VARCHAR NOT NULL, 
 	"fatalities" INTEGER
 );
-
-
