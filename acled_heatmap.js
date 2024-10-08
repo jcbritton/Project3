@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
   let map, heatLayer, markerClusterGroup;
   let allData = [];
   const baseIntensity = 1;
-  const zoomThreshold = 10; // Adjust this value as needed
+  const zoomThreshold = 20; // Adjust this value as needed
 
   map = L.map('map', {
       zoomControl: false  // This disables the default zoom control
