@@ -1,24 +1,23 @@
+<!-- To run, open terminal in file location, type "python -m http.server", then open your browser and navigate to "http://localhost:8000" -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ACLED Dashboard</title>
-    <script src="https://d3js.org/d3.v7.min.js"></script> <!-- Include D3.js -->
-    <link rel="stylesheet" href="styles.css"> <!-- Link to your CSS file -->
-    <link rel="icon" href="favicon.ico" type="image/x-icon"> <!-- Optional favicon -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <link rel="stylesheet" href="styles.css"> 
+    <link rel="icon" href="favicon.ico" type="image/x-icon"> <!-- Optional favicon; I had to use because I encountered an error -->
 </head>
 <body>
-    <div>
+    <div id="filters">
         <label for="state-filter">State:</label>
         <select id="state-filter"></select>
-
         <label for="event-type-filter">Event Type:</label>
         <select id="event-type-filter"></select>
-
         <label for="actor-filter">Actor:</label>
         <select id="actor-filter"></select>
-
         <label for="fatalities-filter">Fatalities:</label>
         <select id="fatalities-filter"></select>
     </div>
@@ -29,7 +28,6 @@
         <div id="pie-chart" class="chart"></div>
     </div>
 
-    <!-- Ensure the path to app.js is correct -->
     <script src="static/js/app.js"></script>
 </body>
 </html>

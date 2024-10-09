@@ -5,18 +5,13 @@ body {
 
 select {
     margin-right: 10px;
-}
-
-select:hover {
-    background-color: #f0f0f0; /* Hover effect for dropdowns */
+    margin-bottom: 10px; /* Add space below dropdowns */
 }
 
 .chart {
-    margin-top: 20px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background-color: #fafafa; /* Background color for charts */
+    margin-top: 40px; /* Increase space between charts */
+    display: inline-block; /* Make charts inline */
+    vertical-align: top; /* Align charts to the top */
 }
 
 .line {
@@ -33,18 +28,14 @@ select:hover {
     shape-rendering: crispEdges;
 }
 
-label {
-    font-weight: bold; /* Bold labels for clarity */
+/* Additional styles for better layout */
+#charts {
+    display: flex; /* Use flexbox for charts layout */
+    justify-content: space-around; /* Space out charts evenly */
 }
 
-/* Responsive design */
-@media (max-width: 600px) {
-    body {
-        margin: 10px;
-    }
-
-    .chart {
-        width: 100%; /* Make charts full width on small screens */
-    }
+#filters {
+    margin-bottom: 20px; /* Space between filters and charts */
 }
+
 
