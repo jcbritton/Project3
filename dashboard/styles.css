@@ -1,0 +1,50 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+select {
+    margin-right: 10px;
+}
+
+select:hover {
+    background-color: #f0f0f0; /* Hover effect for dropdowns */
+}
+
+.chart {
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fafafa; /* Background color for charts */
+}
+
+.line {
+    fill: none;
+    stroke: steelblue;
+    stroke-width: 2;
+}
+
+.x-axis path,
+.x-axis line,
+.y-axis path,
+.y-axis line {
+    fill: none;
+    shape-rendering: crispEdges;
+}
+
+label {
+    font-weight: bold; /* Bold labels for clarity */
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+    body {
+        margin: 10px;
+    }
+
+    .chart {
+        width: 100%; /* Make charts full width on small screens */
+    }
+}
+
