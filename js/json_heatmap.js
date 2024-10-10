@@ -1,4 +1,4 @@
-let map, heatLayer;
+let map, heatLayer, fatalityMarkers, layerControl;
 let allData = [];
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -7,12 +7,26 @@ document.addEventListener('DOMContentLoaded', function() {
         attribution: '© OpenStreetMap contributors'
     }).addTo(map);
 
+    layerControl = L.control.layers(null, null, { collapsed: false }).addTo(map);
+
     function loadHeatLayer() {
-        return fetch('data/ACLED.json')
-            .then(response => response.json())
-            .then(data => {
-                allData = data;
-            });
+        return new Promise((resolve, reject) => {
+            const xhr = new XMLHttpRequest();
+            xhr.overrideMimeType("application/json");
+            xhr.open('GET', 'data/ACLED.json', true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        allData = JSON.parse(xhr.responseText);
+                        resolve();
+                    } else {
+                        reject(new Error(`Failed to load data: ${xhr.status}`));
+                    }
+                }
+            };
+            xhr.onerror = () => reject(new Error('XHR error'));
+            xhr.send(null);
+        });
     }
 
     function createHeatmap() {
@@ -26,13 +40,45 @@ document.addEventListener('DOMContentLoaded', function() {
             radius: 25,
             blur: 15,
             maxZoom: 17
-        }).addTo(map);
+        });
+
+        layerControl.addOverlay(heatLayer, "Heatmap");
+    }
+
+    function addFatalityMarkers() {
+        fatalityMarkers = L.layerGroup();
+
+        allData.forEach(row => {
+            const fatalities = parseInt(row.fatalities);
+            if (fatalities > 0) {
+                const lat = parseFloat(row.latitude);
+                const lon = parseFloat(row.longitude);
+                if (!isNaN(lat) && !isNaN(lon)) {
+                    const marker = L.marker([lat, lon]);
+
+                    const popupContent = `
+                        <strong>${row.event_date}</strong><br>
+                        <strong>Fatalities:</strong> ${fatalities}<br>
+                        ${row.city}, ${row.state}<br>
+                        ${row.notes}
+                    `;
+
+                    marker.bindPopup(popupContent);
+                    fatalityMarkers.addLayer(marker);
+                }
+            }
+        });
+
+        layerControl.addOverlay(fatalityMarkers, "Fatality Markers");
     }
 
     loadHeatLayer()
         .then(() => {
             console.log('Data loaded successfully');
             createHeatmap();
+            addFatalityMarkers();
+            map.addLayer(heatLayer);
+            map.addLayer(fatalityMarkers);
         })
         .catch(error => console.error('Error loading data:', error));
 });

@@ -22,6 +22,7 @@ CREATE TABLE "acled" (
 	"latitude" DECIMAL NOT NULL,
 	"longitude" DECIMAL NOT NULL,
 	"source" VARCHAR NOT NULL,
-	"source_scale" VARCHAR NOT NULL, 
+	"source_scale" VARCHAR NOT NULL,
+	"notes" VARCHAR,
 	"fatalities" INTEGER
 );
