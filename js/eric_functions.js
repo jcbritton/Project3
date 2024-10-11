@@ -12,15 +12,34 @@ function barChart(year) {
         let resultArray = events.filter(eventObj => eventObj.event_date == `*${year}`);
  
         // Collect the types and states in an array
-        let event_type_array = resultArray.event_types;
+        // let event_type_array = resultArray.event_types;
         let state_array = resultArray.state;
 
         // We need to total the number of times each state happens in state_array
+
+        // Array of values to count
+        let usStates = usStates = [
+            "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "Florida", 
+            "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", 
+            "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", 
+            "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", 
+            "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota", "Tennessee", 
+            "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming"
+        ];
+
+        // Object to store the counts
+        let state_sum = usStates.reduce((acc, value) => {
+            acc[value] = state_array.filter(item => item === value).length;
+            return acc;
+        }, {});
+        
+
+        console.log(state_sum); 
  
         // Create the trace for the bar chart
         let trace = {
             x: state_array,
-            y: event_sum,
+            y: state_sum,
             text: state_array,
             type: "bar",
         };
@@ -50,14 +69,22 @@ function pieChart(year) {
         let event_type_array = resultArray.event_types;
         let state_array = resultArray.state;
 
-        // We need to total the number of times each type happens in event_type_array
+        // We need to total the number of times each state happens in event_type_array
+        // Array of values to count
+        let event_types = ['battles','Explosions/Remote Violence','Protests','Riots','Strategic Developements','Violence aganist civilians'];
 
+        // Object to store the counts
+        let event_sum = event_types.reduce((acc, value) => {
+            acc[value] = event_type_array.filter(item => item === value).length;
+            return acc;
+        }, {});
+
+        console.log(event_sum);
  
-        // Create the trace for the bar chart
+        // Create the trace for the pie chart
         let trace = {
-            x: state_array,
-            y: event_sum,
-            text: state_array,
+            values: event_sum,
+            labels: state_array,
             type: "pie",
         };
  
