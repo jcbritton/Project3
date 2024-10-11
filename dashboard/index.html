@@ -1,5 +1,3 @@
-<!-- To run, open terminal in file location, type "python -m http.server", then open your browser and navigate to "http://localhost:8000" -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,8 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ACLED Dashboard</title>
     <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <link rel="stylesheet" href="styles.css"> 
-    <link rel="icon" href="favicon.ico" type="image/x-icon"> <!-- Optional favicon; I had to use because I encountered an error -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <style>
+        /* Basic styles for the charts */
+        #charts {
+            display: flex;
+            flex-direction: column; /* Arrange charts in a column */
+        }
+        .chart {
+            margin: 10px 0; /* Space between charts */
+            height: 300px; /* Set a fixed height for the charts */
+        }
+        .row {
+            display: flex; /* Use flexbox for rows */
+            justify-content: space-between; /* Space out the charts */
+        }
+        .row > .chart {
+            flex: 1; /* Allow charts to grow equally */
+            margin: 0 10px; /* Add margin between charts in the row */
+        }
+    </style>
 </head>
 <body>
     <div id="filters">
@@ -23,13 +43,22 @@
     </div>
 
     <div id="charts">
-        <div id="bar-chart" class="chart"></div>
-        <div id="line-chart" class="chart"></div>
-        <div id="pie-chart" class="chart"></div>
+        <div class="row">
+            <div id="bar-chart" class="chart"></div>
+            <div id="pie-chart" class="chart"></div>
+        </div>
+        <div class="row">
+            <div id="timeSeriesDiv" class="chart"></div>
+            <div id="peacefulProtestsDiv" class="chart"></div>
+        </div>
     </div>
 
-    <script src="static/js/app.js"></script>
+    <div id="map" style="height: 500px;"></div>
+
+    <script src="static/js/app.js" defer></script>
 </body>
 </html>
+
+
 
 
