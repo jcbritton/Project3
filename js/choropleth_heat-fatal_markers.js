@@ -1,5 +1,5 @@
 // Initialize the map
-let map, heatLayer, fatalityMarkers, choroplethLayer, layerControl;
+let map, legend, heatLayer, fatalityMarkers, choroplethLayer, layerControl;
 let allData = [];
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -170,18 +170,46 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }).addTo(choroplethOverlay);
 
-        // Add legend
-        let legend = L.control({ position: "bottomright" });
-        legend.onAdd = function() {
-            let div = L.DomUtil.create("div", "info legend");
-            eventRanges.forEach(function(range) {
-                div.innerHTML += "<div style='display: flex; align-items: center;'>" +
-                    "<div style='background-color: " + range.color +
-                    "; width: 20px; height: 20px; margin-right: 5px;'></div>" +
-                    range.range + "</div>";
-            });
-            return div;
+        // Add legend initially
+        if (!legend) {
+            legend = L.control({ position: "bottomright" });
+            legend.onAdd = function() {
+                let div = L.DomUtil.create("div", "info legend");
+                eventRanges.forEach(function(range) {
+                    div.innerHTML += "<div style='display: flex; align-items: center;'>" +
+                        "<div style='background-color: " + range.color +
+                        "; width: 20px; height: 20px; margin-right: 5px;'></div>" +
+                        range.range + "</div>";
+                });
+                return div;
+            };
+            legend.addTo(map); // Add the legend to the map
         };
-        legend.addTo(map);
+
+        // Remove the legend when the choropleth layer is removed
+        choroplethOverlay.on('remove', function() {
+            if (legend) {
+                map.removeControl(legend);
+                legend = null;
+            }
+        });
+
+        // Add legend when the choropleth layer is added back with toggle
+        choroplethOverlay.on('add', function() {
+            if (!legend) {
+                legend = L.control({ position: "bottomright" });
+                legend.onAdd = function() {
+                    let div = L.DomUtil.create("div", "info legend");
+                    eventRanges.forEach(function(range) {
+                        div.innerHTML += "<div style='display: flex; align-items: center;'>" +
+                            "<div style='background-color: " + range.color +
+                            "; width: 20px; height: 20px; margin-right: 5px;'></div>" +
+                            range.range + "</div>";
+                    });
+                    return div;
+                };
+                legend.addTo(map); // Add the legend to the map
+            }
+        });
     }
 });
