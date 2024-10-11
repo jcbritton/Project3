@@ -1,17 +1,27 @@
 body {
     font-family: Arial, sans-serif;
     margin: 20px;
+    background-color: #f4f4f4; /* Light background color */
 }
 
 select {
     margin-right: 10px;
-    margin-bottom: 10px; /* Add space below dropdowns */
+    margin-bottom: 10px; /* Space below dropdowns */
+    padding: 5px; /* Padding for better visibility */
+    border: 1px solid #ccc; /* Border for dropdowns */
+    border-radius: 4px; /* Rounded corners */
+    background-color: #f9f9f9; /* Light background */
 }
 
 .chart {
     margin-top: 40px; /* Increase space between charts */
     display: inline-block; /* Make charts inline */
     vertical-align: top; /* Align charts to the top */
+    min-height: 300px; /* Minimum height for charts */
+    width: 100%; /* Full width of parent */
+    border: 1px solid #ccc; /* Light border around charts */
+    border-radius: 4px; /* Rounded corners for charts */
+    background-color: white; /* White background for charts */
 }
 
 .line {
@@ -37,5 +47,27 @@ select {
 #filters {
     margin-bottom: 20px; /* Space between filters and charts */
 }
+
+@media (max-width: 768px) {
+    #charts {
+        flex-direction: column; /* Stack charts vertically */
+    }
+    .chart {
+        width: 100%; /* Full width on small screens */
+        margin: 10px 0; /* Space between stacked charts */
+    }
+}
+
+.chart-title {
+    font-size: 1.5em; /* Increase title size */
+    margin-bottom: 10px; /* Space below title */
+    text-align: center; /* Center the title */
+}
+
+select:hover {
+    border-color: #007bff; /* Change border color on hover */
+    background-color: #e9ecef; /* Slightly darker background on hover */
+}
+
 
 

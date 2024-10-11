@@ -4,12 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ACLED Dashboard</title>
+    
+    <!-- Load D3.js and Plotly -->
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <link rel="stylesheet" href="styles.css"> 
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    
+    <!-- Load Leaflet CSS and JS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    
+    <!-- Load Leaflet Heatmap plugin -->
+    <script src="https://unpkg.com/leaflet-heat/dist/leaflet-heat.js"></script>
+    
+    <link rel="stylesheet" href="styles.css"> 
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
     <style>
         /* Basic styles for the charts */
         #charts {
@@ -36,10 +45,9 @@
         <select id="state-filter"></select>
         <label for="event-type-filter">Event Type:</label>
         <select id="event-type-filter"></select>
-        <label for="actor-filter">Actor:</label>
-        <select id="actor-filter"></select>
-        <label for="fatalities-filter">Fatalities:</label>
-        <select id="fatalities-filter"></select>
+        <label for="year-filter">Year:</label>
+        <select id="year-filter"></select>
+
     </div>
 
     <div id="charts">
@@ -48,17 +56,14 @@
             <div id="pie-chart" class="chart"></div>
         </div>
         <div class="row">
-            <div id="timeSeriesDiv" class="chart"></div>
-            <div id="peacefulProtestsDiv" class="chart"></div>
+            <div id="time-chart" class="chart"></div>
+            <div id="peaceful-chart" class="chart"></div>
         </div>
     </div>
 
     <div id="map" style="height: 500px;"></div>
 
-    <script src="static/js/app.js" defer></script>
+    <!-- Your app.js script -->
+    <script src="static/js/app.js"></script>
 </body>
 </html>
-
-
-
-
