@@ -14,6 +14,9 @@ document.addEventListener('DOMContentLoaded', function() {
         layers: [osmLayer]
     }).setView([37.8, -96], 4);
 
+    // Load data
+    loadData();
+
     // Create layer groups
     const heatmapOverlay = L.layerGroup().addTo(map);
     const choroplethOverlay = L.layerGroup().addTo(map);
@@ -32,12 +35,15 @@ document.addEventListener('DOMContentLoaded', function() {
     // Load the data for use by the layers
     function loadData() {
         return Promise.all([
-            d3.json("data/ACLED.json"),
-            d3.json("data/gz_2010_us_040_00_500k.json")
-        ]).then(([eventData, statesData]) => {
+            d3.json("data/ACLED.json")
+        ]).then(([eventData]) => {
             allData = eventData;
-            return { eventData, statesData };
-        });
+            console.log('Data loaded successfully');
+            createHeatmap();
+            addFatalityMarkers();
+            createChoropleth(eventData, statesData);
+        })
+        .catch(error => console.error('Error loading data:', error));
     }
 
     // Create the heatmap layer
@@ -120,7 +126,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         choroplethLayer = L.geoJSON(statesData, {
             style: function(feature) {
-                const state = feature.properties.NAME;
+                const state = feature.properties.name;
                 return {
                     fillColor: getColor(stateEventsCount[state]?.total || 0),
                     weight: 2,
@@ -142,7 +148,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         });
                         layer.bringToFront();
 
-                        const state = feature.properties.NAME;
+                        const state = feature.properties.name;
                         const totalEvents = stateEventsCount[state]?.total || 0;
                         let eventDetails = `<b>${state}</b><br>Total Events: ${totalEvents}<br>`;
 
@@ -178,13 +184,4 @@ document.addEventListener('DOMContentLoaded', function() {
         };
         legend.addTo(map);
     }
-
-    loadData()
-        .then(({ eventData, statesData }) => {
-            console.log('Data loaded successfully');
-            createHeatmap();
-            addFatalityMarkers();
-            createChoropleth(eventData, statesData);
-        })
-        .catch(error => console.error('Error loading data:', error));
 });
