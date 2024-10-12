@@ -1,10 +1,67 @@
+#dashboard-title {
+    font-size: 2em; /* Larger font size */
+    margin-bottom: 20px; /* Space below the title */
+    text-align: center; /* Center the title */
+    color: #333; /* Dark color for visibility */
+}
+
 #dashboard {
     display: flex;
     flex-direction: column;
-    gap: 20px;  /* Space between charts and map */
+    align-items: center;
 }
 
 #map {
-    height: 500px;  /* Set map height */
-    width: 100%;  /* Full width for the map */
+    height: 400px; /* Set a fixed height for the map */
+    width: 100%; /* Full width */
+    margin-bottom: 20px; /* Space below the map */
 }
+
+#chartsContainer {
+    display: flex;
+    flex-direction: column; /* Stack rows vertically */
+    align-items: center; /* Center the content */
+    width: 100%;
+}
+
+#chartRow {
+    display: flex; /* Align charts in a row */
+    justify-content: center;
+    width: 100%; /* Full width for the row */
+    gap: 20px; /* Gap between charts */
+    margin-bottom: 20px; /* Space below the first row */
+}
+
+#bar-chart,
+#pie-chart,
+#timeSeriesDiv,
+#peacefulProtestsDiv {
+    height: 300px; /* Set height for the charts */
+    width: 45%; /* Set width to allow for gaps between charts */
+    box-sizing: border-box; /* Include padding and borders in width */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    background-color: white; /* White background for the charts */
+    padding: 10px; /* Inner spacing */
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    #chartRow {
+        flex-direction: column; /* Stack charts vertically on small screens */
+    }
+
+    #bar-chart,
+    #pie-chart,
+    #timeSeriesDiv,
+    #peacefulProtestsDiv {
+        width: 100%; /* Full width for mobile charts */
+    }
+}
+
+
+
+
+
+
+

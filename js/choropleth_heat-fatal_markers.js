@@ -2,7 +2,10 @@
 let map, legend, heatLayer, fatalityMarkers, choroplethLayer, layerControl;
 let allData = [];
 
-document.addEventListener('DOMContentLoaded', function() {
+// document.addEventListener('DOMContentLoaded', function() { Smith moved this line further down
+// Function to create and initialize the map
+export function initializeMap(statesData) { // Smith added this in order to export
+    if (map) return; // Smith added to prevent reinitialization
     // Create the base layer for the map
     var osmLayer = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
@@ -212,4 +215,8 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
-});
+
+// This event listener will call initializeMap when the DOM is ready
+document.addEventListener('DOMContentLoaded', function() {  //Smith moved the event listener here
+    initializeMap(statesData); // Make sure to pass statesData
+})};  

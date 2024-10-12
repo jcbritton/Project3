@@ -574,3 +574,5 @@ var statesData = {
         }
     }]
 };
+
+export default statesData; // Smith added this line to export the data

@@ -2,31 +2,42 @@
 import { initializeMap } from './choropleth_heat-fatal_markers.js';  // Import map module
 import { barChart, pieChart } from './eric_functions_update.js';  // Import visualizations
 import buildPeacefulProtestsChart from './peaceful_protests.js';  // Import visualization
-import { buildChart } from './time_series_chart_update.js'; // Import visualization
+import buildChart from './time_series_chart_update.js'; // Import time series chart
 import statesData from './states.js';  // Import states data
 
 function createDashboard() {
-    // Create a container for the dashboard layout
     const dashboardContainer = document.getElementById('dashboard');
     
-    // Create and append the bar chart
-    const barChart = new BarChart();
-    dashboardContainer.appendChild(barChart.render());
+    // Load event data
+    d3.json("data/ACLED.json").then(data => {
+        console.log("Data loaded:", data); // Log the entire data structure
+        // Get the current year or specify a year
+        const year = new Date().getFullYear(); 
 
-    // Create and append the pie chart
-    const pieChart = new PieChart();
-    dashboardContainer.appendChild(pieChart.render());
+        // Initialize the map with statesData
+        initializeMap(statesData);
 
-    // Create and append the peaceful protests chart
-    const peacefulProtestsChart = buildPeacefulProtestsChart();
-    dashboardContainer.appendChild(peacefulProtestsChart);
+        // Call the barChart function with the entire data and the current year
+        barChart(data, year); 
+        
+        // Call the pieChart function with the entire data and the current year
+        pieChart(data, year); 
+        
+        // Create and append the peaceful protests chart
+        const peacefulProtestsChart = buildPeacefulProtestsChart(data);
+        dashboardContainer.appendChild(peacefulProtestsChart);
 
-    // Create and append the time series chart
-    const timeSeriesChart = buildChart();
-    dashboardContainer.appendChild(timeSeriesChart);
+        // Create and append the time series chart
+        buildChart(data).then((timeSeriesChart) => {
+            dashboardContainer.appendChild(timeSeriesChart);
+            console.log("Time series chart created and appended.");
+        }).catch((error) => {
+            console.error("Failed to build time series chart:", error);
+        });
 
-    // Initialize the map with statesData
-    initializeMap(statesData);
+    }).catch((error) => {
+        console.error("Error loading event data:", error);
+    });
 }
 
 // Call the function to create the dashboard

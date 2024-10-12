@@ -1,73 +1,81 @@
-// Location of the JSON and CSV files
-let data_json = `../data/ACLED.json`; // Use relative paths correctly
-let data_csv = `../data/ACLED.csv`;
+// eric_functions.js
+let data_json = `../data/ACLED.json`;
 
-// Code to create the bar chart from the year
-export function barChart(year) {  // Add export here
-    // We read in the data from the JSON
-    d3.json(data_json).then((data) => {
-        let events = data.ACLED.event;
-        let resultArray = events.filter(eventObj => eventObj.event_date == `*${year}`);
-        let state_array = resultArray.state;
+export function barChart(data, year) {
+    // Filter the events for the selected year
+    let resultArray = data.filter(eventObj => new Date(eventObj.event_date).getFullYear() === year);
+    
+    // Map to state array
+    let state_array = resultArray.map(event => event.state);
 
-        let usStates = [
-            "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "Florida", 
-            "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", 
-            "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", 
-            "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", 
-            "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota", "Tennessee", 
-            "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming"
-        ];
+    // Array of US states
+    let usStates = [
+        "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "Florida", 
+        "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", 
+        "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", 
+        "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", 
+        "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota", "Tennessee", 
+        "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming"
+    ];
 
-        let state_sum = usStates.reduce((acc, value) => {
-            acc[value] = state_array.filter(item => item === value).length;
-            return acc;
-        }, {});
+    // Count events per state
+    let state_sum = usStates.reduce((acc, state) => {
+        acc[state] = state_array.filter(item => item === state).length;
+        return acc;
+    }, {});
 
-        console.log(state_sum); 
+    // Create the trace for the bar chart
+    let trace = {
+        x: Object.keys(state_sum),
+        y: Object.values(state_sum),
+        type: "bar",
+    };
 
-        let trace = {
-            x: Object.keys(state_sum),
-            y: Object.values(state_sum),
-            type: "bar",
-        };
+    // Define the layout
+    let layout = {
+        title: `Total Events per State in ${year}`,
+        margin: { t: 30, l: 150 },
+        xaxis: {
+            title: 'States',
+            tickangle: 45 // Rotate labels by 45 degrees
+        }
+    };
 
-        let layout = {
-            title: `Total Events per state in ${year}`,
-            margin: { t: 30, l: 150 }
-        };
-
-        Plotly.newPlot("bar", [trace], layout);
-    });
+    // Plot the bar chart
+    Plotly.newPlot("bar-chart", [trace], layout);
 }
 
-// Code to create the pie chart from the year
-export function pieChart(year) {  // Add export here
-    d3.json(data_json).then((data) => {
-        let events = data.ACLED.event;
-        let resultArray = events.filter(eventObj => eventObj.event_date == `*${year}`);
-        let event_type_array = resultArray.event_types;
 
-        let event_types = ['battles', 'Explosions/Remote Violence', 'Protests', 'Riots', 'Strategic Developments', 'Violence against civilians'];
+export function pieChart(data, year) {
+    // Filter the events for the selected year
+    let resultArray = data.filter(eventObj => new Date(eventObj.event_date).getFullYear() === year);
+    
+    // Map to event type array
+    let event_type_array = resultArray.map(event => event.event_type);
 
-        let event_sum = event_types.reduce((acc, value) => {
-            acc[value] = event_type_array.filter(item => item === value).length;
-            return acc;
-        }, {});
+    // Define event types
+    let event_types = ['battles', 'Explosions/Remote Violence', 'Protests', 'Riots', 'Strategic Developments', 'Violence against civilians'];
 
-        console.log(event_sum);
+    // Count events by type
+    let event_sum = event_types.reduce((acc, eventType) => {
+        acc[eventType] = event_type_array.filter(item => item === eventType).length;
+        return acc;
+    }, {});
 
-        let trace = {
-            values: Object.values(event_sum),
-            labels: Object.keys(event_sum),
-            type: "pie",
-        };
+    // Create the trace for the pie chart
+    let trace = {
+        values: Object.values(event_sum),
+        labels: Object.keys(event_sum),
+        type: "pie",
+    };
 
-        let layout = {
-            title: `Events by type in ${year}`,
-            margin: { t: 30, l: 150 }
-        };
+    // Define the layout
+    let layout = {
+        title: `Events by Type in ${year}`,
+        margin: { t: 30, l: 150 }
+    };
 
-        Plotly.newPlot("pie", [trace], layout);
-    });
+    // Plot the pie chart
+    Plotly.newPlot("pie-chart", [trace], layout);
 }
+

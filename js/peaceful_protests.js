@@ -1,5 +1,9 @@
 // function to build the chart
 function buildPeacefulProtestsChart() {
+    const div = document.createElement('div'); // Smith - Create a new div for the chart
+    div.id = "peacefulProtestsDiv"; // Smith - Set the ID for the Plotly chart
+    div.style.width = "100%"; // Smith - Set desired styles
+
     d3.json("data/ACLED.json").then((data) => {
 
         // count occurrences of each sub_event_type
@@ -59,21 +63,27 @@ function buildPeacefulProtestsChart() {
         }];
 
         let layout = {
-            title: "Number of Events by Event Type",
-            xaxis: {title: "Event Type",
+            title: "Peaceful Protest Events",
+            xaxis: {//title: "Event Type",
                     tickvals: eventLabels,
                     ticktext: formattedLabels,
-                    tickangle: 0
+                    tickangle: 45 // Smith change
             },
-            yaxis: {title: "Number of Events"}
+            yaxis: {title: "Number of events"}
         };
 
         // render the chart
-        Plotly.newPlot("peacefulProtestsDiv", barData, layout);
+        Plotly.newPlot(div.id, barData, layout); // Smith - Use the div ID to render the chart
+        // Plotly.newPlot("peacefulProtestsDiv", barData, layout);
 
         console.log("Peaceful protests bar chart built successfully");
     });
+
+    return div; // Smith - Return the created div
 }
+
+// Default export
+export default buildPeacefulProtestsChart; //Smith added this 
 
 // function to run on page load
 function init() {
