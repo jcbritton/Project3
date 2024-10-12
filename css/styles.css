@@ -1,0 +1,10 @@
+#dashboard {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;  /* Space between charts and map */
+}
+
+#map {
+    height: 500px;  /* Set map height */
+    width: 100%;  /* Full width for the map */
+}
