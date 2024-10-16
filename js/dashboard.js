@@ -1,7 +1,7 @@
 // dashboard.js
 import { initializeMap } from './choropleth_heat-fatal_markers.js';  // Import map module
-import { barChart, pieChart } from './eric_functions_update.js';  // Import visualizations
-import buildPeacefulProtestsChart from './peaceful_protests.js';  // Import visualization
+import { barChart, pieChart } from './eric_functions_update.js';  // Import state and event type charts
+import buildPeacefulProtestsChart from './peaceful_protests.js';  // Import peaceful protest chart
 import buildChart from './time_series_chart_update.js'; // Import time series chart
 import statesData from './states.js';  // Import states data
 
